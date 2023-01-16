@@ -2,7 +2,6 @@
 This application can basically perform CRUD on Vending Machine and its stock
 
 ## Prerequisites
-Software needs
 - Docker
 - Database(Mariadb)
 - IDE with python installed
