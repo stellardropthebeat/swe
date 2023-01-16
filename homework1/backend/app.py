@@ -1,12 +1,13 @@
 import json
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from sqlalchemy_utils import database_exists, create_database
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 with app.app_context():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    #app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://myuser:mypassword@mariadb:3306/mydb"
 
     if not database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
         create_database(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -48,7 +49,8 @@ with app.app_context():
         
         def to_dict(self):
             return {
-                'id': self.vm_id,
+                'id': self.id,
+                'vm_id': self.vm_id,
                 'product': self.product,
                 'quantity': self.quantity
             }
@@ -113,15 +115,23 @@ with app.app_context():
 
     @app.route('/')
     def index():
-        return "Hello World"
+        return render_template('base.html')
 
+    @app.route('/machines')
+    def machines():
+        return render_template('machines.html')
+
+    @app.route('/stock')
+    def stocks():
+        return render_template('stock.html')
+        
     @app.route('/add_machine', methods=['POST'])
     def add_machine():
         name = request.json['name']
         location = request.json['location']
         manager = VendingMachineManager()
         manager.create_machine(name, location)
-        return jsonify(success=True, message="Vending machine created successfully"), 201
+        return jsonify(success=True, message="Vending machine created successfully")
 
     @app.route('/get_machine/<int:id>', methods=['GET'])
     def get_machine(id):
