@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Manage Vending Machines</h1>
+<nav>
+    <button id="addMachineBtn" onclick="addMachine()">Add Machine</button>
+    <button id="deleteMachineBtn" onclick="deleteMachine()">Delete Machine</button>
+    <button id="listMachineBtn" onclick="listMachines()">List Machines</button>
+    <button id="updateMachineBtn" onclick="updateMachine()">Update Machine</button>
+</nav>
+<main>
+    <section id="listMachineSection">
+      <table id="listMachineTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody id="listMachineBody">
+        </tbody>
+      </table>
+    </section>
+</main>
+  
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    function addMachine() {
+      var name = prompt("Enter the name of the machine:");
+      var location = prompt("Enter the location of the machine:");
+      axios.post('/add_machine', { name: name, location: location })
+        .then(function (response) {
+          alert("Machine added successfully");
+          listMachines()
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error adding machine");
+        });
+    }
+  
+    function deleteMachine() {
+      var id = prompt("Enter the ID of the machine to delete:");
+      axios.delete('/delete_machine/' + id)
+        .then(function (response) {
+          alert("Machine deleted successfully");
+          listMachines()
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error deleting machine");
+        });
+    }
+  
+    function listMachines() {
+      axios.get('/all_machines')
+        .then(function (response) {
+            var machines = response.data;
+            var tableBody = document.getElementById("listMachineBody");
+            tableBody.innerHTML = "";
+            machines.forEach(function (machine) {
+            var row = tableBody.insertRow();
+            var idCell = row.insertCell();
+            var nameCell = row.insertCell();
+            var locationCell = row.insertCell();
+            idCell.innerHTML = machine.id;
+            nameCell.innerHTML = machine.name;
+            locationCell.innerHTML = machine.location;
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  
+    function updateMachine() {
+      var id = prompt("Enter the ID of the machine to update:");
+      var name = prompt("Enter the new name of the machine:");
+      var location = prompt("Enter the new location of the machine:");
+      axios.put('/update_machine/' + id, { name: name, location: location })
+        .then(function (response) {
+          alert("Machine updated successfully");
+          listMachines()
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error updating machine");
+        });
+    }
+</script>
+  
+{% endblock %}

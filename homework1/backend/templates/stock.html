@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Manage Stock</h1>
+<nav>
+    <button id="addMachineBtn" onclick="addProduct()">Add Product</button>
+    <button id="deleteMachineBtn" onclick="deleteProduct()">Delete Product</button>
+    <button id="listMachineBtn" onclick="listProducts()">List Products</button>
+    <button id="updateMachineBtn" onclick="updateProduct()">Update Product</button>
+</nav>
+<main>
+    <section id="listProductSection">
+      <table id="listProductTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Vm_ID</th>
+            <th>Product</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody id="listProductBody">
+        </tbody>
+      </table>
+    </section>
+</main>
+  
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    function addProduct() {
+        var vm_id = prompt("Enter Vending Machines ID");
+        var product = prompt("Enter the name of the product:");
+        var quantity = prompt("Enter the quantity of the product:");
+      axios.post('/add_product', { vm_id: vm_id, product: product, quantity: quantity})
+        .then(function (response) {
+          alert("Product added successfully");
+          listProducts();
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error adding product");
+        });
+    }
+  
+    function deleteProduct() {
+      var id = prompt("Enter the ID of the product to delete:");
+      axios.delete('/delete_product/' + id)
+        .then(function (response) {
+          alert("Product deleted successfully");
+          listProducts();
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error deleting product");
+        });
+    }
+  
+    function listProducts() {
+      axios.get('/all_products')
+        .then(function (response) {
+            var products = response.data;
+            var tableBody = document.getElementById("listProductBody");
+            tableBody.innerHTML = "";
+            products.forEach(function (product) {
+            var row = tableBody.insertRow();
+            var idCell = row.insertCell();
+            var vm_idCell = row.insertCell();
+            var productCell = row.insertCell();
+            var quantityCell = row.insertCell();
+            idCell.innerHTML = product.id;
+            vm_idCell.innerHTML = product.vm_id;
+            productCell.innerHTML = product.product;
+            quantityCell.innerHTML = product.quantity;
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  
+    function updateProduct() {
+        var id = prompt("Enter the ID of the product to update");
+        var vm_id = prompt("Enter Vending Machines ID");
+        var product = prompt("Enter the name of the product:");
+        var quantity = prompt("Enter the quantity of the product:");
+      axios.put('/update_product/' + id, { vm_id: vm_id, product: product, quantity: quantity })
+        .then(function (response) {
+          alert("Product updated successfully");
+          listProducts();
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("Error updating product");
+        });
+        
+    }
+</script>
+  
+{% endblock %}
