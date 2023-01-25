@@ -2,7 +2,6 @@ Flask
 sqlalchemy_utils
 flask_sqlalchemy
 pymysql
-mariadb
 waitress
 sqlalchemy
 flask_cors
