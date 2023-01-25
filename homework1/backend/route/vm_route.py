@@ -60,6 +60,6 @@ def delete_machine(id):
 
 @vm_controller.route('/all_machines', methods=['GET'])
 def get_all_machines():
-    machines = VendingMachine.query.all()
-    machines_list = [machine.to_dict() for machine in machines]
+    all_machines = VendingMachine.query.all()
+    machines_list = [machine.to_dict() for machine in all_machines]
     return jsonify(machines_list)
