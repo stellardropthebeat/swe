@@ -1,12 +1,14 @@
 from flask import Blueprint, request, jsonify, render_template
 from app_svc import VendingMachineManager
-from database.database import Stock
+from database.stock import Stock
 
 stock_controller = Blueprint('stock_controller', __name__)
+
 
 @stock_controller.route('/stock')
 def stocks():
     return render_template('stock.html')
+
 
 @stock_controller.route('/add_product', methods=['POST'])
 def add_product():
@@ -16,6 +18,8 @@ def add_product():
     manager = VendingMachineManager()
     manager.create_product(vm_id, product, quantity)
     return jsonify(success=True, message="Product added successfully"), 201
+
+
 @stock_controller.route('/update_product/<int:id>', methods=['PUT'])
 def update_product(id):
     manager = VendingMachineManager()
@@ -27,6 +31,8 @@ def update_product(id):
         return jsonify(success=True, message="product updated successfully")
     else:
         return jsonify(success=False, message="Vending machine not found"), 404
+
+
 @stock_controller.route('/get_product/<int:id>', methods=['GET'])
 def get_product(id):
     manager = VendingMachineManager()
@@ -35,6 +41,7 @@ def get_product(id):
         return jsonify(success=True, product=product.to_dict())
     else:
         return jsonify(success=False, message="Product not found"), 404
+
 
 @stock_controller.route('/delete_product/<int:id>', methods=['DELETE'])
 def delete_product(id):
@@ -45,6 +52,7 @@ def delete_product(id):
         return jsonify(success=True, message="Produt deleted successfully")
     else:
         return jsonify(success=False, message="Product not found"), 404
+
 
 @stock_controller.route('/all_products', methods=['GET'])
 def get_all_products():

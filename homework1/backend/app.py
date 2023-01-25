@@ -21,4 +21,5 @@ if __name__ == '__main__':
     app.register_blueprint(stock_controller)
     app.register_blueprint(vm_controller)
     from waitress import serve
+
     serve(app, host="0.0.0.0", port=5000)
