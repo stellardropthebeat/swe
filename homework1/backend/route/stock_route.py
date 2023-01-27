@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, render_template
-from app_svc import VendingMachineManager
+from services.vending_machine_services import VendingMachineManager
 from database.stock import Stock
 
 stock_controller = Blueprint('stock_controller', __name__)
