@@ -11,6 +11,7 @@
 <main>
     <section id="listProductSection">
       <table id="listProductTable">
+          <caption>Products</caption>
         <thead>
           <tr>
             <th>ID</th>
@@ -24,7 +25,7 @@
       </table>
     </section>
 </main>
-  
+
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
@@ -43,10 +44,10 @@
           alert("Error adding product");
         });
     }
-  
+
     function deleteProduct() {
-      var id = prompt("Enter the ID of the product to delete:");
-      axios.delete('/delete_product/' + id)
+        const id = prompt("Enter the ID of the product to delete:");
+        axios.delete('/delete_product/' + id)
         .then(function (response) {
           alert("Product deleted successfully");
           listProducts();
@@ -56,7 +57,7 @@
           alert("Error deleting product");
         });
     }
-  
+
     function listProducts() {
       axios.get('/all_products')
         .then(function (response) {
@@ -79,7 +80,7 @@
           console.log(error);
         });
     }
-  
+
     function updateProduct() {
         var id = prompt("Enter the ID of the product to update");
         var vm_id = prompt("Enter Vending Machines ID");
@@ -94,8 +95,8 @@
           console.log(error);
           alert("Error updating product");
         });
-        
+
     }
 </script>
-  
+
 {% endblock %}
