@@ -30,7 +30,7 @@ def add_product() -> tuple[Response, int]:
         return jsonify(success=False, message="Vending machine not found"), 500
 
 
-@stock_controller.route("/update_product/<int:id>", methods=["PUT"])
+@stock_controller.route("/update_product/<int:product_id>", methods=["PUT"])
 def update_product(product_id: int) -> tuple[Response, int]:
     """Update product in vending machine."""
     manager: StockManager = StockManager()
@@ -44,7 +44,7 @@ def update_product(product_id: int) -> tuple[Response, int]:
         return jsonify(success=False, message="Vending machine not found"), 404
 
 
-@stock_controller.route("/get_product/<int:id>", methods=["GET"])
+@stock_controller.route("/get_product/<int:product_id>", methods=["GET"])
 def get_product(product_id: int) -> tuple[Response, int]:
     """Get product from vending machine."""
     manager: StockManager = StockManager()
@@ -55,7 +55,7 @@ def get_product(product_id: int) -> tuple[Response, int]:
         return jsonify(success=False, message=failed_message), 404
 
 
-@stock_controller.route("/delete_product/<int:id>", methods=["DELETE"])
+@stock_controller.route("/delete_product/<int:product_id>", methods=["DELETE"])
 def delete_product(product_id: int) -> tuple[Response, int]:
     """Delete product from vending machine."""
     manager: StockManager = StockManager()

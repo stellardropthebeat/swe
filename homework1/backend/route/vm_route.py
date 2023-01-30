@@ -38,7 +38,7 @@ def add_machine() -> tuple[Response, int]:
         return jsonify(success=False, message=failed_message), 500
 
 
-@vm_controller.route("/get_machine/<int:id>", methods=["GET"])
+@vm_controller.route("/get_machine/<int:machine_id>", methods=["GET"])
 def get_machine(machine_id: int) -> tuple[Response, int]:
     """Get vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
@@ -49,7 +49,7 @@ def get_machine(machine_id: int) -> tuple[Response, int]:
         return jsonify(success=False, message=failed_message), 404
 
 
-@vm_controller.route("/update_machine/<int:id>", methods=["PUT"])
+@vm_controller.route("/update_machine/<int:machine_id>", methods=["PUT"])
 def update_machine(machine_id: int) -> tuple[Response, int]:
     """Update vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
@@ -63,13 +63,13 @@ def update_machine(machine_id: int) -> tuple[Response, int]:
         return jsonify(success=False, message=failed_message), 404
 
 
-@vm_controller.route("/delete_machine/<int:id>", methods=["DELETE"])
-def delete_machine(product_id: int) -> tuple[Response, int]:
+@vm_controller.route("/delete_machine/<int:machine_id>", methods=["DELETE"])
+def delete_machine(machine_id: int) -> tuple[Response, int]:
     """Delete vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(machine_id=product_id)
+    machine: VendingMachine = manager.read_machine(machine_id=machine_id)
     if machine:
-        manager.delete_machine(product_id)
+        manager.delete_machine(machine_id)
         return jsonify(success=True, message=delete_success), 200
     else:
         return jsonify(success=False, message=failed_message), 404
