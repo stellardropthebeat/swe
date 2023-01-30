@@ -12,7 +12,7 @@ services:
     ports:
       - "3306:3306"
   app:
-    build: .
+    build: ./backend
     environment:
       - FLASK_APP=app.py
       - FLASK_ENV=development
