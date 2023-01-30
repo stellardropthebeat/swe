@@ -1,19 +1,21 @@
-from flask import Flask
-from flask_cors import CORS
+"""This module is the entry point of the application."""
 
-from app_init import db
-from route.stock_route import stock_controller
-from route.vm_route import vm_controller
 import os
 
-url = os.environ.get('DATABASE_URL')
+from app_init import db
+from flask import Flask
+from flask_cors import CORS
+from route.stock_route import stock_controller
+from route.vm_route import vm_controller
 
-app = Flask(__name__)
+url: os = os.environ.get("DATABASE_URL")
+
+app: Flask = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = url
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     db.init_app(app)
     with app.app_context():
         db.create_all()
