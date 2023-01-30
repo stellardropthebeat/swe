@@ -16,7 +16,6 @@ class VendingMachineManager:
         new_machine: VendingMachine = VendingMachine(name=name, location=location)
         self.db.session.add(new_machine)
         self.db.session.commit()
-        self.db.session.close()
         return new_machine.id
 
     def read_machine(self: "VendingMachineManager", machine_id: int = None, name: str = None) -> VendingMachine:
