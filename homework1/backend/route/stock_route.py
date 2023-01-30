@@ -65,7 +65,7 @@ def delete_product(product_id: int) -> Response | tuple[Response, int]:
 
 
 @stock_controller.route("/all_products", methods=["GET"])
-def get_all_products() -> Response:
+def get_all_products() -> Response | tuple[Response, int]:
     """Get all products from vending machine."""
     products: collections.Iterable = Stock.query.all()
     products_list: list = [product.to_dict() for product in products]
