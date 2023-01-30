@@ -11,12 +11,13 @@ class VendingMachineManager:
         """Initialize a vending machine manager."""
         self.db = db
 
-    def create_machine(self: "VendingMachineManager", name: str, location: str) -> None:
+    def create_machine(self: "VendingMachineManager", name: str, location: str) -> int:
         """Create a new vending machine in the vending machine table."""
         new_machine: VendingMachine = VendingMachine(name=name, location=location)
         self.db.session.add(new_machine)
         self.db.session.commit()
         self.db.session.close()
+        return new_machine.id
 
     def read_machine(self: "VendingMachineManager", machine_id: int = None, name: str = None) -> VendingMachine:
         """Read a vending machine from the vending machine table."""

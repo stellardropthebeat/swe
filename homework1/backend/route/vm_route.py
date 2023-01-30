@@ -31,8 +31,11 @@ def add_machine() -> tuple[Response, int]:
     name: str = request.json["name"]
     location: str = request.json["location"]
     manager: VendingMachineManager = VendingMachineManager()
-    manager.create_machine(name, location)
-    return jsonify(success=True, message=create_success), 201
+    machine_id: int = manager.create_machine(name, location)
+    if machine_id:
+        return jsonify(success=True, message=create_success, id=machine_id), 201
+    else:
+        return jsonify(success=False, message=failed_message), 500
 
 
 @vm_controller.route("/get_machine/<int:id>", methods=["GET"])

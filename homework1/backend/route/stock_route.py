@@ -23,8 +23,11 @@ def add_product() -> tuple[Response, int]:
     product: str = request.json["product"]
     quantity: int = request.json["quantity"]
     manager: StockManager = StockManager()
-    manager.create_product(vm_id, product, quantity)
-    return jsonify(success=True, message="Product added successfully"), 201
+    product_id: int = manager.create_product(vm_id, product, quantity)
+    if product_id:
+        return jsonify(success=True, message="Product added successfully", id=product_id), 201
+    else:
+        return jsonify(success=False, message="Vending machine not found"), 500
 
 
 @stock_controller.route("/update_product/<int:id>", methods=["PUT"])
