@@ -39,7 +39,7 @@ def add_machine() -> Response | tuple[Response, int]:
 def get_machine(machine_id: int) -> Response | tuple[Response, int]:
     """Get vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(id=machine_id)
+    machine: VendingMachine = manager.read_machine(machine_id=machine_id)
     if machine:
         return jsonify(success=True, machine=machine.to_dict())
     else:
@@ -50,7 +50,7 @@ def get_machine(machine_id: int) -> Response | tuple[Response, int]:
 def update_machine(machine_id: int) -> Response | tuple[Response, int]:
     """Update vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(id=machine_id)
+    machine: VendingMachine = manager.read_machine(machine_id=machine_id)
     if machine:
         name: str = request.json.get("name", machine.name)
         location: str = request.json.get("location", machine.location)
@@ -64,7 +64,7 @@ def update_machine(machine_id: int) -> Response | tuple[Response, int]:
 def delete_machine(product_id: int) -> Response | tuple[Response, int]:
     """Delete vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(id=product_id)
+    machine: VendingMachine = manager.read_machine(machine_id=product_id)
     if machine:
         manager.delete_machine(product_id)
         return jsonify(success=True, message=delete_success)
