@@ -11,7 +11,7 @@ from route.vm_route import vm_controller
 url: os = os.environ.get("DATABASE_URL")
 
 app: Flask = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*", "send_wildcard": "False"}})
 app.config["SQLALCHEMY_DATABASE_URI"] = url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
