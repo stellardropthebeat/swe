@@ -3,7 +3,6 @@
 import unittest
 
 import requests
-from app import app
 from flask import json
 from services.vm_test_services import VendingTestServices
 
@@ -25,7 +24,7 @@ class TestAddMachine(unittest.TestCase):
     def test_add_machine_fail(self: "TestAddMachine") -> None:
         """Fail to add machine."""
         fail_test_json = {"name": "test"}
-        response: requests = app.test_client().post(url=service.add_machine_url, json=fail_test_json)
+        response: requests = requests.post(url=service.add_machine_url, json=fail_test_json)
         response_json: json = response.json()
         assert response.status_code == 500
         assert response_json["success"] is False

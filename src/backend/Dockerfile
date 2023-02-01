@@ -1,21 +1,19 @@
-# start from base
 FROM python:3.9
 
-RUN adduser -D worker
-USER worker
-WORKDIR /usr/src
+# Create a new user
+RUN adduser --disabled-password --gecos '' app_user
 
-## copy our application code
-COPY src .
-COPY requirements.txt .
+COPY .. /app
 
-RUN apt-get update
+WORKDIR /app
+
 RUN pip install --upgrade pip
 
-# Install dependencies
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-# Assign execution permissions
-RUN chmod +x app.py
+EXPOSE 5000
 
-CMD [ "python", "./backend/app.py" ]
+# Switch to the newly created user
+USER app_user
+
+CMD ["python", "./app.py"]

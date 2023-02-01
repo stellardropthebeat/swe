@@ -1,7 +1,6 @@
 """Test Vending Machine services."""
 
 import requests
-from app import app
 from flask import json
 
 
@@ -19,13 +18,13 @@ class VendingTestServices:
 
     def query_all_machines(self: "VendingTestServices") -> json:
         """Query all machines."""
-        all_machines: json = app.test_client().get(self.all_machines_url).json()
+        all_machines: json = requests.get(self.all_machines_url).json()
         return all_machines
 
     def add_machine(self: "VendingTestServices", name: str, location: str) -> requests:
         """Add machine."""
         test_json: json = {"name": name, "location": location}
-        response: requests = app.test_client().get(self.all_machines_url, data=test_json)
+        response: requests = requests.post(url=self.add_machine_url, json=test_json)
         return response
 
     def add_machine_if_empty(self: "VendingTestServices", name: str, location: str) -> json:

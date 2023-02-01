@@ -1,7 +1,6 @@
 """Test Stock services."""
 
 import requests
-from app import app
 from flask import json
 
 
@@ -19,13 +18,13 @@ class StockTestServices:
 
     def query_all_stocks(self: "StockTestServices") -> json:
         """Query all stocks."""
-        all_stocks: json = app.test_client().get(self.all_stocks_url).json()
+        all_stocks: json = requests.get(self.all_stocks_url).json()
         return all_stocks
 
     def add_stock(self: "StockTestServices", name: str, price: int, quantity: int) -> requests:
         """Add stock."""
         test_json: json = {"name": name, "price": price, "quantity": quantity}
-        response: requests = app.test_client().get(self.all_stocks_url, data=test_json)
+        response: requests = requests.post(url=self.add_stock_url, json=test_json)
         return response
 
     def add_stock_if_empty(self: "StockTestServices", name: str, price: int, quantity: int) -> json:

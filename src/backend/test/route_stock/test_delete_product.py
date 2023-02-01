@@ -3,7 +3,6 @@
 import unittest
 
 import requests
-from app import app
 from flask import json
 from services.stock_test_services import StockTestServices
 
@@ -20,14 +19,14 @@ class TestDeleteProduct(unittest.TestCase):
             product_id: int = service.add_stock_if_empty("test", 10, 1)
         else:
             product_id: int = all_products_url[0]["id"]
-        response: requests = app.test_client().delete(url=f"{service.delete_stock_url}/{product_id}")
+        response: requests = requests.delete(url=f"{service.delete_stock_url}/{product_id}")
         response_json: json = response.json()
         assert response.status_code == 200
         assert response_json["success"] is True
 
     def test_delete_product_fail(self: "TestDeleteProduct") -> None:
         """Fail to delete product."""
-        response: requests = app.test_client().delete(url=f"{service.delete_stock_url}/-1")
+        response: requests = requests.delete(url=f"{service.delete_stock_url}/0")
         response_json: json = response.json()
         assert response.status_code == 404
         assert response_json["success"] is False

@@ -12,11 +12,6 @@ services:
       - mariadb-data:/var/lib/mysql
     ports:
       - "3306:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
   app:
     build: ./backend
     environment:
@@ -25,7 +20,6 @@ services:
       - FLASK_DEBUG=1
       - DATABASE_URL=mysql+pymysql://myuser:mypassword@mariadb:3306/mydb
     container_name: app
-    command: python app.py
     depends_on:
       - mariadb
     ports:
