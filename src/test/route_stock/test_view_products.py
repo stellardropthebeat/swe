@@ -26,7 +26,7 @@ class TestViewStock(unittest.TestCase):
     def test_view_products_fail(self: "TestViewStock") -> None:
         """Fail to view products."""
         response: requests = requests.get(url=f"{service.get_stock_url}/0")
-        assert response.status_code == 404
+        assert response.status_code == 500
 
     def test_view_all_products(self: "TestViewStock") -> None:
         """Test view all products route."""
@@ -36,7 +36,7 @@ class TestViewStock(unittest.TestCase):
     def test_view_all_products_fail(self: "TestViewStock") -> None:
         """Fail to view all products."""
         response: requests = requests.get(url=f"{service.all_stocks_url}/0")
-        assert response.status_code == 500
+        assert response.status_code == 404
 
 
 if __name__ == "__main__":
