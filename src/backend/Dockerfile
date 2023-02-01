@@ -18,4 +18,4 @@ RUN pip install -r requirements.txt
 # Assign execution permissions
 RUN chmod +x app.py
 
-CMD [ "python", "./app.py" ]
+CMD [ "python", "./backend/app.py" ]
