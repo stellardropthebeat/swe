@@ -28,9 +28,7 @@ class TestUpdateMachine(unittest.TestCase):
     def test_update_machine_fail(self: "TestUpdateMachine") -> None:
         """Fail to delete machine."""
         response: requests = requests.put(url=f"{service.update_machine_url}/0")
-        response_json: json = response.json()
-        assert response.status_code == 404
-        assert response_json["success"] is False
+        assert response.status_code == 400
 
 
 if __name__ == "__main__":

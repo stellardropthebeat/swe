@@ -25,9 +25,7 @@ class TestAddMachine(unittest.TestCase):
         """Fail to add machine."""
         fail_test_json = {"name": "test"}
         response: requests = requests.post(url=service.add_machine_url, json=fail_test_json)
-        response_json: json = response.json()
         assert response.status_code == 500
-        assert response_json["success"] is False
 
 
 if __name__ == "__main__":

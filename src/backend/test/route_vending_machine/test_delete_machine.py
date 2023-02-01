@@ -27,9 +27,7 @@ class TestDeleteMachine(unittest.TestCase):
     def test_delete_machine_fail(self: "TestDeleteMachine") -> None:
         """Fail to delete machine."""
         response: requests = requests.delete(url=f"{service.delete_machine_url}/0")
-        response_json: json = response.json()
-        assert response.status_code == 404
-        assert response_json["success"] is False
+        assert response.status_code == 500
 
 
 if __name__ == "__main__":

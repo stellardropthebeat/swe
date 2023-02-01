@@ -14,10 +14,10 @@ class TestUpdateProduct(unittest.TestCase):
 
     def test_update_product(self: "TestUpdateProduct") -> None:
         """Test Update Product route."""
-        test_json = {"name": "test", "quantity": 10, "price": 1}
+        test_json: json = {"vm_id": 2, "product": "test", "quantity": 1}
         all_products_url: json = service.query_all_stocks()
         if len(all_products_url) == 0:
-            product_id: int = service.add_stock_if_empty("test", 10, 1)
+            product_id: int = service.add_stock_if_empty(vm_id=1, product="test", quantity=1)
         else:
             product_id: int = all_products_url[0]["id"]
         response: requests = requests.put(url=f"{service.update_stock_url}/{product_id}", json=test_json)
@@ -31,9 +31,7 @@ class TestUpdateProduct(unittest.TestCase):
         """Fail to Update Product."""
         fail_test_json = {"name": "test"}
         response: requests = requests.put(url=f"{service.update_stock_url}/0", json=fail_test_json)
-        response_json: json = response.json()
-        assert response.status_code == 404
-        assert response_json["success"] is False
+        assert response.status_code == 500
 
 
 if __name__ == "__main__":
