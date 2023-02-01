@@ -11,6 +11,11 @@ services:
       - mariadb-data:/var/lib/mysql
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   app:
     build: ./backend
     environment:
