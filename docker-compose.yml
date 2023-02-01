@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypassword
+      - MYSQL_DATABASE=mydb
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  app:
+    build: ./src
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - DATABASE_URL=mysql+pymysql://myuser:mypassword@mariadb:3306/mydb
+    container_name: app
+    depends_on:
+      - mariadb
+    ports:
+      - "5001:5000"
+volumes:
+  mariadb-data:
