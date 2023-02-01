@@ -1,6 +1,6 @@
 """Stock model."""
 
-from app_init import db
+from vending_machine.app_init import db
 
 
 class Stock(db.Model):

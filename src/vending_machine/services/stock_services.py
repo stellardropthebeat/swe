@@ -1,7 +1,7 @@
 """Stock services Module."""
 
-from app_init import db
-from database.stock import Stock
+from vending_machine.app_init import db
+from vending_machine.database.stock import Stock
 
 
 class StockManager:

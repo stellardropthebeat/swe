@@ -2,10 +2,9 @@
 
 import os
 
+from app_init import db
 from flask import Flask
 from flask_cors import CORS
-
-from app_init import db
 from route.stock_route import stock_controller
 from route.vm_route import vm_controller
 

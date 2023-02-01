@@ -7,7 +7,7 @@ import unittest
 import requests
 from flask import json
 
-from services.stock_test_services import StockTestServices
+from vending_machine.services.stock_test_services import StockTestServices
 
 service: StockTestServices = StockTestServices()
 
@@ -25,6 +25,7 @@ class TestAddProduct(unittest.TestCase):
         # Check response data
         response_json: json = response.json()
         assert response_json["success"] is True
+        # TODO: change to app.test_client().get() to test the route
 
     def test_add_product_fail(self: "TestAddProduct") -> None:
         """Fail to add product."""

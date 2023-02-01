@@ -3,8 +3,8 @@
 from flask import Blueprint, Response, jsonify, render_template, request
 from sqlalchemy.orm import collections
 
-from database.stock import Stock
-from services.stock_services import StockManager
+from vending_machine.database.stock import Stock
+from vending_machine.services.stock_services import StockManager
 
 stock_controller: Blueprint = Blueprint("stock_controller", __name__)
 
