@@ -7,7 +7,7 @@ class Stock(db.Model):
     """Stock model."""
 
     id: int = db.Column(db.Integer, primary_key=True)
-    vm_id: int = db.Column(db.Integer, db.ForeignKey("vending_machine.id"), nullable=False)
+    vm_id: int = db.Column(db.Integer, nullable=False)
     product: str = db.Column(db.String(255), nullable=False)
     quantity: int = db.Column(db.Integer, nullable=False)
 
