@@ -3,8 +3,8 @@
 from flask import Blueprint, Response, jsonify, render_template, request
 from sqlalchemy.orm import collections
 
-from src.database.vending_machine import VendingMachine
-from src.services.vending_machine_services import VendingMachineManager
+from database.vending_machine import VendingMachine
+from services.vending_machine_services import VendingMachineManager
 
 vm_controller: Blueprint = Blueprint("vm_controller", __name__)
 

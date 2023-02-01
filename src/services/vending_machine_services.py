@@ -1,7 +1,7 @@
 """Vending Machine Services Module."""
 
-from src.app_init import db
-from src.database.vending_machine import VendingMachine
+from app_init import db
+from database.vending_machine import VendingMachine
 
 
 class VendingMachineManager:

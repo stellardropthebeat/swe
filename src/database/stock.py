@@ -1,6 +1,6 @@
 """Stock model."""
 
-from src.app_init import db
+from app_init import db
 
 
 class Stock(db.Model):

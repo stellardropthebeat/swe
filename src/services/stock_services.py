@@ -1,7 +1,7 @@
 """Stock services Module."""
 
-from src.app_init import db
-from src.database.stock import Stock
+from app_init import db
+from database.stock import Stock
 
 
 class StockManager:

@@ -5,7 +5,7 @@ import unittest
 import requests
 from flask import json
 
-from src.services.vm_test_services import VendingTestServices
+from services.vm_test_services import VendingTestServices
 
 service: VendingTestServices = VendingTestServices()
 
