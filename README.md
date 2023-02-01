@@ -6,10 +6,10 @@ This application can basically perform CRUD on Vending Machine and its stock
 - Database(Mariadb)
 - IDE with python installed
 
-### Installing software and launch application 
-Step 1: Install Docker, MariaDB and finish the set up.
+### Installing software and launch application
+Step 1: Install Docker, MariaDB and finish the set-up.
 
-Step 2: Clone this github to your repository.
+Step 2: Clone this GitHub to your repository.
 
 Step 3: Make sure your current workspace is in directory ***homework1***
 
