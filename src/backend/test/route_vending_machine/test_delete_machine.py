@@ -3,10 +3,11 @@
 import unittest
 
 import requests
+from app import app
 from flask import json
-from services.test_vm_services import TestVendingServices
+from services.vm_test_services import VendingTestServices
 
-service: TestVendingServices = TestVendingServices()
+service: VendingTestServices = VendingTestServices()
 
 
 class TestDeleteMachine(unittest.TestCase):
@@ -19,14 +20,14 @@ class TestDeleteMachine(unittest.TestCase):
             machine_id: int = service.add_machine_if_empty("test", "test")
         else:
             machine_id: int = all_machines_url[0]["id"]
-        response: requests = requests.delete(url=f"{service.delete_machine_url}/{machine_id}")
+        response: requests = app.test_client().delete(url=f"{service.delete_machine_url}/{machine_id}")
         response_json: json = response.json()
         assert response.status_code == 200
         assert response_json["success"] is True
 
     def test_delete_machine_fail(self: "TestDeleteMachine") -> None:
         """Fail to delete machine."""
-        response: requests = requests.delete(url=f"{service.delete_machine_url}/-1")
+        response: requests = app.test_client().delete(url=f"{service.delete_machine_url}/-1")
         response_json: json = response.json()
         assert response.status_code == 404
         assert response_json["success"] is False

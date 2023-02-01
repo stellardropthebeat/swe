@@ -3,10 +3,11 @@
 import unittest
 
 import requests
+from app import app
 from flask import json
-from services.test_stock_services import TestStockServices
+from services.stock_test_services import StockTestServices
 
-service: TestStockServices = TestStockServices()
+service: StockTestServices = StockTestServices()
 
 
 class TestUpdateProduct(unittest.TestCase):
@@ -20,7 +21,7 @@ class TestUpdateProduct(unittest.TestCase):
             product_id: int = service.add_stock_if_empty("test", 10, 1)
         else:
             product_id: int = all_products_url[0]["id"]
-        response: requests = requests.put(url=f"{service.update_stock_url}/{product_id}", json=test_json)
+        response: requests = app.test_client().put(url=f"{service.update_stock_url}/{product_id}", json=test_json)
         assert response.status_code == 200
 
         # Check response data
@@ -30,7 +31,7 @@ class TestUpdateProduct(unittest.TestCase):
     def test_update_product_fail(self: "TestUpdateProduct") -> None:
         """Fail to Update Product."""
         fail_test_json = {"name": "test"}
-        response: requests = requests.put(url=service.update_stock_url, json=fail_test_json)
+        response: requests = app.test_client().put(url=f"{service.update_stock_url}/-1", json=fail_test_json)
         response_json: json = response.json()
         assert response.status_code == 404
         assert response_json["success"] is False
