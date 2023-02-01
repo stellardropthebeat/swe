@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "vending-machine"
+name = "swe"
 version = "0.1.0"
 description = ""
 authors = ["stellardropthebeat <nutchapol.isa@student.mahidol.edu>"]
