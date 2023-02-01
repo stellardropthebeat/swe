@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["stellardropthebeat <nutchapol.isa@student.mahidol.edu>"]
 readme = "README.md"
-packages = [{include = "vending_machine"}]
+packages = [{include = "swe"}]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
