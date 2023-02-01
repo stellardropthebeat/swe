@@ -4,10 +4,9 @@ import unittest
 
 import requests
 from flask import json
+from services.test_vm_services import TestVendingServices
 
-ENDPOINT: str = "http://localhost:5001"
-
-add_machine_url: str = f"{ENDPOINT}/add_machine"
+service: TestVendingServices = TestVendingServices()
 
 
 class TestAddMachine(unittest.TestCase):
@@ -15,8 +14,7 @@ class TestAddMachine(unittest.TestCase):
 
     def test_add_machine(self: "TestAddMachine") -> None:
         """Test add machine route."""
-        test_json: json = {"name": "test", "location": "test"}
-        response: requests = requests.post(url=add_machine_url, json=test_json)
+        response = service.add_machine("test", "test")
         assert response.status_code == 201
 
         # Check response data
@@ -26,8 +24,10 @@ class TestAddMachine(unittest.TestCase):
     def test_add_machine_fail(self: "TestAddMachine") -> None:
         """Fail to add machine."""
         fail_test_json = {"name": "test"}
-        response: requests = requests.post(url=add_machine_url, json=fail_test_json)
+        response: requests = requests.post(url=service.add_machine_url, json=fail_test_json)
+        response_json: json = response.json()
         assert response.status_code == 500
+        assert response_json["success"] is False
 
 
 if __name__ == "__main__":
