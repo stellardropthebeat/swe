@@ -11,7 +11,18 @@ from route.vm_route import vm_controller
 from sqlalchemy.exc import SQLAlchemyError
 from waitress import serve
 
-url: os = os.environ.get("DATABASE_URL")
+url: os = (
+    "mysql+pymysql://"
+    + os.environ["MYSQL_USER"]
+    + ":"
+    + os.environ["MYSQL_PASSWORD"]
+    + "@"
+    + os.environ["MYSQL_DATABASE"]
+    + ":"
+    + os.environ["MYSQL_PORT"]
+    + "/"
+    + os.environ["MYSQL_DATABASE"]
+)
 
 app: Flask = Flask(__name__)
 app.app_context().push()

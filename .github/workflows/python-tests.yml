@@ -80,7 +80,7 @@ jobs:
         run: |
           poetry run pytest
         env:
-          MYSQL_ROOT_PASSWORD: mypassword
+          MYSQL_PORT: mariadb:3306
           MYSQL_DATABASE: mydb
           MYSQL_USER: myuser
           MYSQL_PASSWORD: mypassword
