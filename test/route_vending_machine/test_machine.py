@@ -1,10 +1,11 @@
 import secrets
 import string
 
-from app import app
 from bs4 import BeautifulSoup
 from flask import json
-from services.vending_machine_services import VendingMachineManager
+
+from vending_machine.app import app
+from vending_machine.services.vending_machine_services import VendingMachineManager
 
 parser = "html.parser"
 

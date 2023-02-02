@@ -16,6 +16,7 @@ flake8-eradicate = "^1.4.0"
 flask = "^2.2.2"
 requests = "^2.28.2"
 beautifulsoup4 = "^4.11.2"
+myapplication = "^0.1.0"
 
 
 [build-system]

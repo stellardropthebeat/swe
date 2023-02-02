@@ -791,6 +791,20 @@ files = [
 ]
 
 [[package]]
+name = "myapplication"
+version = "0.1.0"
+description = "Useful towel-related stuff."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "MyApplication-0.1.0.tar.gz", hash = "sha256:ca19555afe8c67247043f912d8b8b1a227e617988aa1ca83baaac8269830e428"},
+]
+
+[package.dependencies]
+flask = "*"
+
+[[package]]
 name = "nest-asyncio"
 version = "1.5.6"
 description = "Patch asyncio to allow nested event loops"
@@ -1378,4 +1392,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.7,<4.0"
-content-hash = "5af3fc7cb88fe3db32f90564ba1328106034b59b18525420a3833a343c47b0a2"
+content-hash = "601c5c6c0a6335611abd4372a50e8b97fbeeb97359ba8775dbeffba6dd55a32a"
