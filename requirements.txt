@@ -1,0 +1,10 @@
+Flask
+sqlalchemy_utils
+flask_sqlalchemy
+pymysql
+waitress
+sqlalchemy
+requests~=2.28.2
+flask~=2.2.2
+pytest
+pytest-cov
