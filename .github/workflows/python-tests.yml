@@ -80,8 +80,7 @@ jobs:
         run: |
           poetry run pytest
         env:
-          MYSQL_PORT: mariadb:3306
-          MYSQL_DATABASE: mydb
+          MYSQL_DATABASE: localhost:3306/mydb
           MYSQL_USER: myuser
           MYSQL_PASSWORD: mypassword
       - name: Upload coverage report artifact

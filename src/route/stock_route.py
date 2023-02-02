@@ -8,8 +8,6 @@ from src.services.stock_services import StockManager
 
 stock_controller: Blueprint = Blueprint("stock_controller", __name__)
 
-failed_message: str = "Product not found"
-
 
 @stock_controller.route("/stock")
 def stocks() -> str:
@@ -25,10 +23,7 @@ def add_product() -> tuple[Response, int]:
     quantity: int = request.json["quantity"]
     manager: StockManager = StockManager()
     product_id: int = manager.create_product(vm_id, product, quantity)
-    if product_id:
-        return jsonify(success=True, message="Product added successfully", id=product_id), 201
-    else:
-        return jsonify(success=False, message="Vending machine not found"), 500
+    return jsonify(success=True, message="Product added successfully", id=product_id), 201
 
 
 @stock_controller.route("/update_product/<int:product_id>", methods=["PUT"])
@@ -36,25 +31,18 @@ def update_product(product_id: int) -> tuple[Response, int]:
     """Update product in vending machine."""
     manager: StockManager = StockManager()
     updated_product: Stock = manager.read_product(product_id=product_id)
-    if updated_product:
-        product: str = request.json.get("product", updated_product.product)
-        quantity: int = request.json.get("quantity", updated_product.quantity)
-        manager.update_product(product_id, product=product, quantity=quantity)
-        return jsonify(success=True, message="product updated successfully"), 200
-    else:
-        return jsonify(success=False, message="Vending machine not found"), 404
+    product: str = request.json.get("product", updated_product.product)
+    quantity: int = request.json.get("quantity", updated_product.quantity)
+    manager.update_product(product_id, product=product, quantity=quantity)
+    return jsonify(success=True, message="product updated successfully"), 200
 
 
 @stock_controller.route("/delete_product/<int:product_id>", methods=["DELETE"])
 def delete_product(product_id: int) -> tuple[Response, int]:
     """Delete product from vending machine."""
     manager: StockManager = StockManager()
-    product_to_delete: Stock = manager.read_product(product_id=product_id)
-    if product_to_delete:
-        manager.delete_product(product_id)
-        return jsonify(success=True, message="Product deleted successfully"), 200
-    else:
-        return jsonify(success=False, message=failed_message), 404
+    manager.delete_product(product_id)
+    return jsonify(success=True, message="Product deleted successfully"), 200
 
 
 @stock_controller.route("/all_products", methods=["GET"])

@@ -3,7 +3,6 @@
 import os
 
 from flask import Flask
-from sqlalchemy.exc import SQLAlchemyError
 from waitress import serve
 
 from src.app_init import db
@@ -19,11 +18,8 @@ url: os = (
     + os.environ["MYSQL_PASSWORD"]
     + "@"
     + os.environ["MYSQL_DATABASE"]
-    + ":"
-    + os.environ["MYSQL_PORT"]
-    + "/"
-    + os.environ["MYSQL_DATABASE"]
 )
+# url: os = "mysql+pymysql://myuser:mypassword@localhost:3306/mydb"
 
 app: Flask = Flask(__name__)
 app.app_context().push()
@@ -35,12 +31,9 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     db.session.commit()
-    try:
-        db.session.add(VendingMachine(name="test", location="test"))
-        db.session.add(Stock(vm_id=1, stock="test", quantity=1))
-        db.session.commit()
-    except SQLAlchemyError:
-        pass
+    db.session.add(VendingMachine(name="test", location="test"))
+    db.session.add(Stock(vm_id=1, stock="test", quantity=1))
+    db.session.commit()
 
 
 """Register blueprints to app."""

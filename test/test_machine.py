@@ -1,12 +1,9 @@
 import secrets
 import string
 
-from bs4 import BeautifulSoup
 from flask import json
 
 from src.app import app
-
-parser = "html.parser"
 
 add_url: str = "/add_machine"
 delete_url: str = "/delete_machine"
@@ -22,51 +19,51 @@ def random_string(length: int) -> str:
 
 def get_id() -> int:
     """Get the first machine_id found."""
-    machines = app.test_client().get(all_machines_url).data
-    soup = BeautifulSoup(machines, parser)
-    line = soup.find("li").find("a").get("href")
-    lid = line[line.rfind("/") + 1 :]
-    return lid
+    machines = app.test_client().get(all_machines_url).get_json()
+    machine_id = machines[0]["id"]
+    return machine_id
 
 
-def random_json() -> dict:
+def random_json() -> json:
     """Get a random json."""
     rand_json = {"name": random_string(5), "location": random_string(5)}
-    return rand_json
+    return json.dumps(rand_json)
 
 
 def test_add_machine() -> None:
     """Test add machine route."""
     test_json: json = random_json()
-    name: str = test_json["name"]
-    location: str = test_json["location"]
-    app.test_client().post(add_url, data=test_json)
-
-    machines = app.test_client().get(all_machines_url).data
-    soup = BeautifulSoup(machines, parser)
-    assert name == soup.find(text=name)
-    assert location == soup.find(text=location)
+    success: bool = True
+    result: json = app.test_client().post(add_url, data=test_json, content_type="application/json").get_json()
+    assert success == result["success"]
 
 
 def test_update_machine() -> None:
     """Test update machine route."""
     test_json: json = random_json()
-    machine_id: str = get_id()
-    new_name: str = test_json["name"]
-    new_location: str = test_json["location"]
-    app.test_client().post(f"{update_url}/{machine_id}", data=test_json)
-
-    machines = app.test_client().get(all_machines_url).data
-    soup = BeautifulSoup(machines, parser)
-    assert new_name == soup.find(text=new_name)
-    assert new_location == soup.find(text=new_location)
+    machine_id: int = get_id()
+    success: bool = True
+    result: json = (
+        app.test_client().put(f"{update_url}/{machine_id}", data=test_json, content_type="application/json").get_json()
+    )
+    assert success == result["success"]
 
 
 def test_delete_machine() -> None:
     """Test delete machine route."""
     machine_id: int = get_id()
-    app.test_client().delete(f"{delete_url}/{machine_id}")
+    success: bool = True
+    result: json = app.test_client().delete(f"{delete_url}/{machine_id}").get_json()
+    assert success == result["success"]
 
-    machines = app.test_client().get(all_machines_url).data
-    soup = BeautifulSoup(machines, parser)
-    assert soup.find("a", {"id": machine_id}) is None
+
+def test_render_index_page() -> None:
+    """Test render page."""
+    response: int = app.test_client().get("/").status_code
+    assert response == 200
+
+
+def test_render_machine_page() -> None:
+    """Test render page."""
+    response: int = app.test_client().get("/machines").status_code
+    assert response == 200

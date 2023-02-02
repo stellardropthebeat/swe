@@ -8,7 +8,6 @@ from src.services.vending_machine_services import VendingMachineManager
 
 vm_controller: Blueprint = Blueprint("vm_controller", __name__)
 
-failed_message: str = "Vending machine not found"
 create_success: str = "Vending machine created successfully"
 update_success: str = "Vending machine updated successfully"
 delete_success: str = "Vending machine deleted successfully"
@@ -33,10 +32,7 @@ def add_machine() -> tuple[Response, int]:
     location: str = request.json["location"]
     manager: VendingMachineManager = VendingMachineManager()
     machine_id: int = manager.create_machine(name, location)
-    if machine_id:
-        return jsonify(success=True, message=create_success, id=machine_id), 201
-    else:
-        return jsonify(success=False, message=failed_message), 500
+    return jsonify(success=True, message=create_success, id=machine_id), 201
 
 
 @vm_controller.route("/update_machine/<int:machine_id>", methods=["PUT"])
@@ -44,25 +40,18 @@ def update_machine(machine_id: int) -> tuple[Response, int]:
     """Update vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
     machine: VendingMachine = manager.read_machine(machine_id=machine_id)
-    if machine:
-        name: str = request.json.get("name", machine.name)
-        location: str = request.json.get("location", machine.location)
-        manager.update_machine(machine_id, name=name, location=location)
-        return jsonify(success=True, message=update_success), 200
-    else:
-        return jsonify(success=False, message=failed_message), 404
+    name: str = request.json.get("name", machine.name)
+    location: str = request.json.get("location", machine.location)
+    manager.update_machine(machine_id, name=name, location=location)
+    return jsonify(success=True, message=update_success), 200
 
 
 @vm_controller.route("/delete_machine/<int:machine_id>", methods=["DELETE"])
 def delete_machine(machine_id: int) -> tuple[Response, int]:
     """Delete vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(machine_id=machine_id)
-    if machine:
-        manager.delete_machine(machine_id)
-        return jsonify(success=True, message=delete_success), 200
-    else:
-        return jsonify(success=False, message=failed_message), 404
+    manager.delete_machine(machine_id)
+    return jsonify(success=True, message=delete_success), 200
 
 
 @vm_controller.route("/all_machines", methods=["GET"])

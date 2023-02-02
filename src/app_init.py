@@ -13,12 +13,8 @@ url: os = (
     + os.environ["MYSQL_PASSWORD"]
     + "@"
     + os.environ["MYSQL_DATABASE"]
-    + ":"
-    + os.environ["MYSQL_PORT"]
-    + "/"
-    + os.environ["MYSQL_DATABASE"]
 )
-
+# url: os = "mysql+pymysql://myuser:mypassword@localhost:3306/mydb"
 db_engine: sqlalchemy = sqlalchemy.create_engine(url)
 
 if not database_exists(db_engine.url):

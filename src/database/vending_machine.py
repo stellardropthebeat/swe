@@ -15,10 +15,6 @@ class VendingMachine(db.Model):
         self.name: str = name
         self.location: str = location
 
-    def __repr__(self: "VendingMachine") -> str:
-        """Represent instance as a unique string."""
-        return "<VendingMachine %r>" % self.name
-
     def to_dict(self: "VendingMachine") -> dict:
         """Return object data in easily serializable format."""
         return {"id": self.id, "name": self.name, "location": self.location}

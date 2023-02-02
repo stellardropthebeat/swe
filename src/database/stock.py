@@ -17,10 +17,6 @@ class Stock(db.Model):
         self.product: str = stock
         self.quantity: int = quantity
 
-    def __repr__(self: "Stock") -> str:
-        """Represent a stock as a unique string."""
-        return "<Stock %r>" % self.product
-
     def to_dict(self: "Stock") -> dict:
         """Return object data in easily serializable format."""
         return {
