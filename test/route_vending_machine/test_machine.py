@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from flask import json
 
 from vending_machine.app import app
-from vending_machine.services.vending_machine_services import VendingMachineManager
 
 parser = "html.parser"
 
@@ -14,13 +13,20 @@ delete_url: str = "/delete_machine"
 update_url: str = "/update_machine"
 all_machines_url: str = "/all_machines"
 
-service = VendingMachineManager()
-
 
 def random_string(length: int) -> str:
     """Get a random string."""
     rand_str = "".join(secrets.choice(string.ascii_letters) for _ in range(length))
     return rand_str
+
+
+def get_id() -> int:
+    """Get the first machine_id found."""
+    machines = app.test_client().get(all_machines_url).data
+    soup = BeautifulSoup(machines, parser)
+    line = soup.find("li").find("a").get("href")
+    lid = line[line.rfind("/") + 1 :]
+    return lid
 
 
 def random_json() -> dict:
@@ -45,7 +51,7 @@ def test_add_machine() -> None:
 def test_update_machine() -> None:
     """Test update machine route."""
     test_json: json = random_json()
-    machine_id: int = service.get_random_id()
+    machine_id: str = get_id()
     new_name: str = test_json["name"]
     new_location: str = test_json["location"]
     app.test_client().post(f"{update_url}/{machine_id}", data=test_json)
@@ -58,7 +64,7 @@ def test_update_machine() -> None:
 
 def test_delete_machine() -> None:
     """Test delete machine route."""
-    machine_id: int = service.get_random_id()
+    machine_id: int = get_id()
     app.test_client().delete(f"{delete_url}/{machine_id}")
 
     machines = app.test_client().get(all_machines_url).data
