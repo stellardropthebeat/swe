@@ -3,7 +3,7 @@ FROM python:3.9
 # Create a new user
 RUN adduser --disabled-password --gecos '' app_user
 
-COPY ../.. /app
+COPY ../../.. /app
 
 WORKDIR /app
 

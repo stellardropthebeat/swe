@@ -1,6 +1,6 @@
 """Stock model."""
 
-from vending_machine.app_init import db
+from app_init import db
 
 
 class Stock(db.Model):
@@ -8,10 +8,10 @@ class Stock(db.Model):
 
     id: int = db.Column(db.Integer, primary_key=True)
     vm_id: int = db.Column(db.Integer, nullable=False)
-    product: str = db.Column(db.String(255), nullable=False)
+    product: str = db.Column(db.String(255), unique=True, nullable=False)
     quantity: int = db.Column(db.Integer, nullable=False)
 
-    def __init__(self: "Stock", stock: str, vm_id: int, quantity: int) -> None:
+    def __init__(self: "Stock", vm_id: int, stock: str, quantity: int) -> None:
         """Initialize a stock."""
         self.vm_id: int = vm_id
         self.product: str = stock

@@ -13,7 +13,7 @@ services:
     ports:
       - "3306:3306"
   app:
-    build: ./src
+    build: ./src/vending_machine
     environment:
       - FLASK_APP=app.py
       - FLASK_ENV=development
@@ -23,6 +23,6 @@ services:
     depends_on:
       - mariadb
     ports:
-      - "5001:5000"
+      - "5000:5000"
 volumes:
   mariadb-data:

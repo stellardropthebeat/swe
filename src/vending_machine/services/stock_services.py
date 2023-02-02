@@ -1,7 +1,7 @@
 """Stock services Module."""
 
-from vending_machine.app_init import db
-from vending_machine.database.stock import Stock
+from app_init import db
+from database.stock import Stock
 
 
 class StockManager:
@@ -44,3 +44,7 @@ class StockManager:
         self.db.session.delete(stock)
         self.db.session.commit()
         self.db.session.close()
+
+    def get_random_id(self: "StockManager") -> int:
+        """Get a random id from the stock table."""
+        return self.db.session.query(Stock.id).order_by(db.func.random()).first()[0]

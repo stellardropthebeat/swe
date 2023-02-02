@@ -1,10 +1,9 @@
 """Vending Machine API Route."""
 
+from database.vending_machine import VendingMachine
 from flask import Blueprint, Response, jsonify, render_template, request
+from services.vending_machine_services import VendingMachineManager
 from sqlalchemy.orm import collections
-
-from vending_machine.database.vending_machine import VendingMachine
-from vending_machine.services.vending_machine_services import VendingMachineManager
 
 vm_controller: Blueprint = Blueprint("vm_controller", __name__)
 
@@ -37,17 +36,6 @@ def add_machine() -> tuple[Response, int]:
         return jsonify(success=True, message=create_success, id=machine_id), 201
     else:
         return jsonify(success=False, message=failed_message), 500
-
-
-@vm_controller.route("/get_machine/<int:machine_id>", methods=["GET"])
-def get_machine(machine_id: int) -> tuple[Response, int]:
-    """Get vending machine."""
-    manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(machine_id=machine_id)
-    if machine:
-        return jsonify(success=True, machine=machine.to_dict()), 200
-    else:
-        return jsonify(success=False, message=failed_message), 404
 
 
 @vm_controller.route("/update_machine/<int:machine_id>", methods=["PUT"])

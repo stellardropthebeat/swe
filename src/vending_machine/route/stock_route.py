@@ -1,10 +1,9 @@
 """Stock API route."""
 
+from database.stock import Stock
 from flask import Blueprint, Response, jsonify, render_template, request
+from services.stock_services import StockManager
 from sqlalchemy.orm import collections
-
-from vending_machine.database.stock import Stock
-from vending_machine.services.stock_services import StockManager
 
 stock_controller: Blueprint = Blueprint("stock_controller", __name__)
 
@@ -43,17 +42,6 @@ def update_product(product_id: int) -> tuple[Response, int]:
         return jsonify(success=True, message="product updated successfully"), 200
     else:
         return jsonify(success=False, message="Vending machine not found"), 404
-
-
-@stock_controller.route("/get_product/<int:product_id>", methods=["GET"])
-def get_product(product_id: int) -> tuple[Response, int]:
-    """Get product from vending machine."""
-    manager: StockManager = StockManager()
-    product: Stock = manager.read_product(product_id=product_id)
-    if product:
-        return jsonify(success=True, product=product.to_dict()), 200
-    else:
-        return jsonify(success=False, message=failed_message), 404
 
 
 @stock_controller.route("/delete_product/<int:product_id>", methods=["DELETE"])

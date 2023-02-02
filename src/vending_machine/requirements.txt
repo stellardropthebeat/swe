@@ -4,7 +4,8 @@ flask_sqlalchemy
 pymysql
 waitress
 sqlalchemy
-flask_cors
-python-dotenv~=0.21.0
 requests~=2.28.2
 flask~=2.2.2
+pytest
+pytest-cov
+bs4

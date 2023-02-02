@@ -1,14 +1,14 @@
 """Vending Machine Model."""
 
-from vending_machine.app_init import db
+from app_init import db
 
 
 class VendingMachine(db.Model):
     """Vending Machine Model."""
 
     id: int = db.Column(db.Integer, primary_key=True)
-    name: str = db.Column(db.String(255), nullable=False)
-    location: str = db.Column(db.String(255), nullable=False)
+    name: str = db.Column(db.String(255), unique=True, nullable=False)
+    location: str = db.Column(db.String(255), unique=True, nullable=False)
 
     def __init__(self: "VendingMachine", name: str, location: str) -> None:
         """Initialize with name and location."""

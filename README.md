@@ -17,7 +17,7 @@ Step 4: run this command in terminal `docker compose up --build`
 
 Step 5: It will take a couple while to run all the stuffs.
 
-Step 6: Then, you can now access it via [http://localhost:5001](http://localhost:5001)
+Step 6: Then, you can now access it via [http://localhost:5000](http://localhost:5000)
 
 Step 7: After you finish visiting, don't forget to ***crtl+c*** in terminal to terminate the program.
 
