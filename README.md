@@ -33,11 +33,15 @@ Step 8: To finish all stuff in docker, just run `docker compose down`, and we ar
 
 ### Running the tests
 
-Step 1: Make sure your current workspace is in directory ***swe***
+Step 1: Make sure you are in directory ***swe***
 
-Step 2: run this command in terminal `docker compose up --build`
+Step 2: Have Poetry installed
 
-Step 3: It will take a couple while to run all the stuffs.
+Step 3: Run `poetry install` to install all the dependencies
+
+Step 4: Run `poetry run pytest` to run all the tests
+
+Step 5: If you want to run specific test, run `poetry run pytest -k <test_name>`
 
 ## Authors
 Nutchapol Isariyapruit ID: 6281454
