@@ -1,6 +1,8 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=stellardropthebeat_swe&metric=coverage)](https://sonarcloud.io/summary/new_code?id=stellardropthebeat_swe)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=stellardropthebeat_swe&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=stellardropthebeat_swe)
 
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=stellardropthebeat_swe&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=stellardropthebeat_swe)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=stellardropthebeat_swe&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=stellardropthebeat_swe)
 
 # Vending Machine Manager Application
 This application can basically perform CRUD on Vending Machine and its stock
