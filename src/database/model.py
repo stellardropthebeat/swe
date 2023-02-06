@@ -28,7 +28,7 @@ class Stock(db.Model):
     __tablename__: str = "stock"
 
     id: int = db.Column(db.Integer, primary_key=True)
-    vm_id: int = db.Column(db.Integer, db.ForeignKey("vending_machine.id", ondelete="CASCADE"), nullable=False)
+    vm_id: int = db.Column(db.Integer, db.ForeignKey("vending_machine.id"), nullable=False)
     product: str = db.Column(db.String(255), unique=True, nullable=False)
     quantity: int = db.Column(db.Integer, nullable=False)
 
