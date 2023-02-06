@@ -3,7 +3,7 @@
 from flask import Blueprint, Response, jsonify, render_template, request
 from sqlalchemy.orm import collections
 
-from src.database.stock import Stock
+from src.database.model import Stock
 from src.services.stock_services import StockManager
 
 stock_controller: Blueprint = Blueprint("stock_controller", __name__)

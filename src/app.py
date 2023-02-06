@@ -6,8 +6,7 @@ from flask import Flask
 from waitress import serve
 
 from src.app_init import db
-from src.database.stock import Stock
-from src.database.vending_machine import VendingMachine
+from src.database.model import Stock, VendingMachine
 from src.route.stock_route import stock_controller
 from src.route.vm_route import vm_controller
 
