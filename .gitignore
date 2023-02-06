@@ -1,2 +1,5 @@
 *.jpg
 /cov_html
+/.vscode
+/.pytest_cache
+/test/cov_html

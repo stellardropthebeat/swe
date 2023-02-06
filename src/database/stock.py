@@ -1,7 +1,5 @@
 """Stock model."""
 
-from sqlalchemy import ForeignKey
-
 from src.app_init import db
 from src.database.vending_machine import VendingMachine
 
@@ -10,7 +8,7 @@ class Stock(db.Model):
     """Stock model."""
 
     id: int = db.Column(db.Integer, primary_key=True)
-    vm_id: int = db.Column(db.Integer, ForeignKey(VendingMachine.id), ondelete="CASCADE", nullable=False)
+    vm_id: int = db.Column(db.Integer, db.ForeignKey(VendingMachine.id, ondelete="CASCADE"), nullable=False)
     product: str = db.Column(db.String(255), unique=True, nullable=False)
     quantity: int = db.Column(db.Integer, nullable=False)
 
