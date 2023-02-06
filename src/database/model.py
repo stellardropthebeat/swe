@@ -6,6 +6,8 @@ from src.app_init import db
 class VendingMachine(db.Model):
     """Vending Machine Model."""
 
+    __tablename__: str = "vending_machine"
+
     id: int = db.Column(db.Integer, primary_key=True)
     name: str = db.Column(db.String(255), unique=True, nullable=False)
     location: str = db.Column(db.String(255), unique=True, nullable=False)
@@ -22,6 +24,8 @@ class VendingMachine(db.Model):
 
 class Stock(db.Model):
     """Stock model."""
+
+    __tablename__: str = "stock"
 
     id: int = db.Column(db.Integer, primary_key=True)
     vm_id: int = db.Column(db.Integer, db.ForeignKey("vending_machine.id", ondelete="CASCADE"), nullable=False)
