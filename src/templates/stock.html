@@ -6,7 +6,8 @@
     <button id="addMachineBtn" onclick="addProduct()">Add Product</button>
     <button id="deleteMachineBtn" onclick="deleteProduct()">Delete Product</button>
     <button id="listMachineBtn" onclick="listProducts()">List Products</button>
-    <button id="updateMachineBtn" onclick="updateProduct()">Update Product</button>
+    <button id="updateMachineBtn" onclick="updateProductName()">Update Product Name</button>
+    <button id="updateMachineBtn" onclick="updateProductQuantity()">Update Product Quantity</button>
 </nav>
 <main>
     <section id="listProductSection">
@@ -81,21 +82,34 @@
         });
     }
 
-    function updateProduct() {
+    function updateProductName() {
         var id = prompt("Enter the ID of the product to update");
         var vm_id = prompt("Enter Vending Machines ID");
         var product = prompt("Enter the name of the product:");
-        var quantity = prompt("Enter the quantity of the product:");
-      axios.put('/update_product/' + id, { vm_id: vm_id, product: product, quantity: quantity })
-        .then(function (response) {
-          alert("Product updated successfully");
-          listProducts();
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("Error updating product");
-        });
+        axios.put('/update_product_name/' + id, { vm_id: vm_id, product: product })
+            .then(function (response) {
+              alert("Product updated successfully");
+              listProducts();
+            })
+            .catch(function (error) {
+              console.log(error);
+              alert("Error updating product");
+            });
+    }
 
+    function updateProductQuantity() {
+        var id = prompt("Enter the ID of the product to update");
+        var vm_id = prompt("Enter Vending Machines ID");
+        var quantity = prompt("Enter the quantity of the product:");
+        axios.put('/update_product_quantity/' + id, { vm_id: vm_id, quantity: quantity })
+            .then(function (response) {
+                alert("Product updated successfully");
+                listProducts();
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("Error updating product");
+            });
     }
 </script>
 

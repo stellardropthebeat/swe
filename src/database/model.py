@@ -10,7 +10,7 @@ class VendingMachine(db.Model):
 
     id: int = db.Column(db.Integer, primary_key=True)
     name: str = db.Column(db.String(255), unique=True, nullable=False)
-    location: str = db.Column(db.String(255), unique=True, nullable=False)
+    location: str = db.Column(db.String(255), nullable=False)
 
     def __init__(self: "VendingMachine", name: str, location: str) -> None:
         """Initialize with name and location."""
@@ -45,4 +45,30 @@ class Stock(db.Model):
             "vm_id": self.vm_id,
             "product": self.product,
             "quantity": self.quantity,
+        }
+
+
+class VendingMachineTimeLine(db.Model):
+    """Vending Machine timeline Model."""
+
+    __tablename__: str = "vending_machine_timeline"
+
+    id: int = db.Column(db.Integer, primary_key=True)
+    vm_id: int = db.Column(db.Integer, nullable=False)
+    event: str = db.Column(db.String(255), nullable=False)
+    timestamp: str = db.Column(db.String(255), nullable=False)
+
+    def __init__(self: "VendingMachineTimeLine", vm_id: int, event: str, timestamp: str) -> None:
+        """Initialize with name and location."""
+        self.vm_id: int = vm_id
+        self.event: str = event
+        self.timestamp: str = timestamp
+
+    def to_dict(self: "VendingMachineTimeLine") -> dict:
+        """Return object data in easily serializable format."""
+        return {
+            "id": self.id,
+            "vm_id": self.vm_id,
+            "event": self.event,
+            "timestamp": self.timestamp,
         }

@@ -18,23 +18,11 @@ class VendingMachineManager:
         self.db.session.commit()
         return new_machine.id
 
-    def read_machine(self: "VendingMachineManager", machine_id: int = None, name: str = None) -> VendingMachine:
-        """Read a vending machine from the vending machine table."""
-        if machine_id:
-            machine: VendingMachine = VendingMachine.query.filter_by(id=machine_id).first()
-        elif name:
-            machine: VendingMachine = VendingMachine.query.filter_by(name=name).first()
-        else:
-            machine: VendingMachine = VendingMachine.query.all()
-        return machine
-
     def update_machine(self: "VendingMachineManager", machine_id: int, name: str = None, location: str = None) -> None:
         """Update a vending machine in the vending machine table."""
         machine: VendingMachine = VendingMachine.query.filter_by(id=machine_id).first()
-        if name:
-            machine.name = name
-        if location:
-            machine.location = location
+        machine.name = name
+        machine.location = location
         self.db.session.commit()
         self.db.session.close()
 

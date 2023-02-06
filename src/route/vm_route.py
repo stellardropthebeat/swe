@@ -39,7 +39,7 @@ def add_machine() -> tuple[Response, int]:
 def update_machine(machine_id: int) -> tuple[Response, int]:
     """Update vending machine."""
     manager: VendingMachineManager = VendingMachineManager()
-    machine: VendingMachine = manager.read_machine(machine_id=machine_id)
+    machine: VendingMachine = VendingMachine.query.filter_by(id=machine_id).first()
     name: str = request.json.get("name", machine.name)
     location: str = request.json.get("location", machine.location)
     manager.update_machine(machine_id, name=name, location=location)

@@ -14,27 +14,29 @@ class StockManager:
     def create_product(self: "StockManager", vm_id: int, product: str, quantity: int) -> int:
         """Create a new product in the stock table."""
         new_product: Stock = Stock(vm_id=vm_id, stock=product, quantity=quantity)
-        self.db.session.add(new_product)
-        self.db.session.commit()
-        return new_product.id
-
-    def read_product(self: "StockManager", product_id: int = None, product: str = None) -> Stock:
-        """Read a product from the stock table."""
-        if product_id:
-            product: Stock = Stock.query.filter_by(id=product_id).first()
-        elif product:
-            product: Stock = Stock.query.filter_by(product=product).first()
+        # if new_product exists, update the quantity
+        if Stock.query.filter_by(product=product).first():
+            stock: Stock = Stock.query.filter_by(product=product).first()
+            stock.quantity += quantity
+            self.db.session.commit()
+            return stock.id
+        # else create a new product
         else:
-            product: Stock = Stock.query.all()
-        return product
+            self.db.session.add(new_product)
+            self.db.session.commit()
+            return new_product.id
 
-    def update_product(self: "StockManager", product_id: int, product: str = None, quantity: int = None) -> None:
-        """Update a product in the stock table."""
+    def update_product_quantity(self: "StockManager", product_id: int, quantity: int) -> None:
+        """Update a product quantity in the stock table."""
         stock: Stock = Stock.query.filter_by(id=product_id).first()
-        if product:
-            stock.product = product
-        if quantity:
-            stock.quantity = quantity
+        stock.quantity += int(quantity)
+        self.db.session.commit()
+        self.db.session.close()
+
+    def update_product_name(self: "StockManager", product_id: int, product: str) -> None:
+        """Update a product name in the stock table."""
+        stock: Stock = Stock.query.filter_by(id=product_id).first()
+        stock.product = product
         self.db.session.commit()
         self.db.session.close()
 
