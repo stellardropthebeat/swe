@@ -1,9 +1,9 @@
 """Stock model."""
 
 from sqlalchemy import ForeignKey
-from vending_machine import VendingMachine
 
 from src.app_init import db
+from src.database.vending_machine import VendingMachine
 
 
 class Stock(db.Model):
