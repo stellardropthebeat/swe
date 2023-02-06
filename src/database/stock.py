@@ -1,5 +1,8 @@
 """Stock model."""
 
+from sqlalchemy import ForeignKey
+from vending_machine import VendingMachine
+
 from src.app_init import db
 
 
@@ -7,7 +10,7 @@ class Stock(db.Model):
     """Stock model."""
 
     id: int = db.Column(db.Integer, primary_key=True)
-    vm_id: int = db.Column(db.Integer, nullable=False)
+    vm_id: int = db.Column(db.Integer, ForeignKey(VendingMachine.id), nullable=False)
     product: str = db.Column(db.String(255), unique=True, nullable=False)
     quantity: int = db.Column(db.Integer, nullable=False)
 
@@ -25,3 +28,9 @@ class Stock(db.Model):
             "product": self.product,
             "quantity": self.quantity,
         }
+
+    # class StockTimeLine(db.Model):
+    #     """Keep track of stock changes."""
+    #
+    #     id: int = db.Column(db.Integer, primary_key=True)
+    #     vm_id: int = db.Column(db.Integer, ForeignKey(),nullable=False)
