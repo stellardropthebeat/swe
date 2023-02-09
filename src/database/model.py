@@ -1,5 +1,7 @@
 """Database model."""
 
+from datetime import datetime
+
 from src.app_init import db
 
 
@@ -40,35 +42,37 @@ class Stock(db.Model):
 
     def to_dict(self: "Stock") -> dict:
         """Return object data in easily serializable format."""
-        return {
-            "id": self.id,
-            "vm_id": self.vm_id,
-            "product": self.product,
-            "quantity": self.quantity,
-        }
+        return {"id": self.id, "vm_id": self.vm_id, "product": self.product, "quantity": self.quantity}
 
 
-class VendingMachineTimeLine(db.Model):
-    """Vending Machine timeline Model."""
+def add_to_timeline(vm_id: int, product_id: int, quantity: int) -> None:
+    """Add stock to timeline."""
+    db.session.add(StockTimeLine(vm_id, product_id, quantity))
+    db.session.commit()
 
-    __tablename__: str = "vending_machine_timeline"
+
+class StockTimeLine(db.Model):
+    """Stock Timeline model."""
+
+    __tablename__: str = "stock_timeline"
 
     id: int = db.Column(db.Integer, primary_key=True)
     vm_id: int = db.Column(db.Integer, nullable=False)
-    event: str = db.Column(db.String(255), nullable=False)
-    timestamp: str = db.Column(db.String(255), nullable=False)
+    product_id: int = db.Column(db.Integer, nullable=False)
+    quantity: int = db.Column(db.Integer, nullable=False)
+    time: datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __init__(self: "VendingMachineTimeLine", vm_id: int, event: str, timestamp: str) -> None:
-        """Initialize with name and location."""
+    def __init__(self: "StockTimeLine", vm_id: int, product_id: int, quantity: int) -> None:
+        """Initialize a stock."""
         self.vm_id: int = vm_id
-        self.event: str = event
-        self.timestamp: str = timestamp
+        self.product_id: int = product_id
+        self.quantity: int = quantity
 
-    def to_dict(self: "VendingMachineTimeLine") -> dict:
+    def to_dict(self: "StockTimeLine") -> dict:
         """Return object data in easily serializable format."""
         return {
-            "id": self.id,
-            "vm_id": self.vm_id,
-            "event": self.event,
-            "timestamp": self.timestamp,
+            "vm_name": VendingMachine.query.filter_by(id=self.vm_id).first().name,
+            "product_name": Stock.query.filter_by(id=self.product_id).first().product,
+            "quantity": self.quantity,
+            "time": self.time,
         }
