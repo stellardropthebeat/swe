@@ -12,12 +12,12 @@ from src.route.stock_timeline import stock_timeline_controller
 from src.route.vm_route import vm_controller
 
 url: os = (
-    "mysql+pymysql://"
-    + os.environ["MYSQL_USER"]
+    "postgresql://"
+    + os.environ["POSTGRES_USER"]
     + ":"
-    + os.environ["MYSQL_PASSWORD"]
+    + os.environ["POSTGRES_PASSWORD"]
     + "@"
-    + os.environ["MYSQL_DATABASE"]
+    + os.environ["POSTGRES_DB"]
 )
 # url: os = "mysql+pymysql://myuser:mypassword@localhost:3306/mydb"
 

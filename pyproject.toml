@@ -21,6 +21,7 @@ sqlalchemy_utils = "^0.37.9"
 flask_sqlalchemy = "^2.5.1"
 pymysql = "^1.0.2"
 sqlalchemy = "^1.4.27"
+psycopg2-binary = "^2.9.5"
 
 
 [build-system]

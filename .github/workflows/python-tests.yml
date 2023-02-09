@@ -44,12 +44,11 @@ jobs:
       mariadb:
         image: mariadb
         env:
-          MYSQL_ROOT_PASSWORD: mypassword
-          MYSQL_DATABASE: mydb
-          MYSQL_USER: myuser
-          MYSQL_PASSWORD: mypassword
+          POSTGRES_DB: mydb
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
         ports:
-          - 3306:3306
+          - 5432:5432
     steps:
       - uses: actions/checkout@v2
 
@@ -80,9 +79,9 @@ jobs:
         run: |
           poetry run pytest
         env:
-          MYSQL_DATABASE: localhost:3306/mydb
-          MYSQL_USER: myuser
-          MYSQL_PASSWORD: mypassword
+          POSTGRES_DB: localhost:5432/mydb
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2
         with:

@@ -1,29 +1,26 @@
 version: '3'
 services:
-  mariadb:
-    image: mariadb
+  db:
+    image: postgres:latest
     container_name: db
-    environment:
-      - MYSQL_ROOT_PASSWORD=mypassword
-      - MYSQL_DATABASE=mydb
-      - MYSQL_USER=myuser
-      - MYSQL_PASSWORD=mypassword
-    volumes:
-      - mariadb-data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mydb
   app:
     build: .
     environment:
       - FLASK_APP=app.py
       - FLASK_ENV=development
       - FLASK_DEBUG=1
-      - MYSQL_DATABASE=mariadb:3306/mydb
-      - MYSQL_USER=myuser
-      - MYSQL_PASSWORD=mypassword
+      - POSTGRES_DB=db:5432/mydb
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
     container_name: app
     depends_on:
-      - mariadb
+      - db
     ports:
       - "5000:5000"
 volumes:

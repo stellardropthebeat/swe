@@ -1,6 +1,7 @@
 """Database model."""
 
 from datetime import datetime
+from typing import List
 
 from src.app_init import db
 
@@ -60,6 +61,7 @@ class StockTimeLine(db.Model):
     vm_id: int = db.Column(db.Integer, nullable=False)
     product_id: int = db.Column(db.Integer, nullable=False)
     quantity: int = db.Column(db.Integer, nullable=False)
+    all_product: List[int] = db.Column(db.ARRAY(db.Integer))
     time: datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __init__(self: "StockTimeLine", vm_id: int, product_id: int, quantity: int) -> None:
@@ -67,12 +69,37 @@ class StockTimeLine(db.Model):
         self.vm_id: int = vm_id
         self.product_id: int = product_id
         self.quantity: int = quantity
+        all_product = [product.id for product in Stock.query.filter_by(vm_id=vm_id).all()]
+        all_product.append(product_id)
+        self.all_product = all_product
+
+    def get_all_product_stock(self) -> dict:
+        """Get all product stock."""
+        ret: dict = {}
+        for product_id in self.all_product:
+            if product_id == self.product_id:
+                ret[self.product_id] = {
+                    "product_name": Stock.query.filter_by(id=self.product_id).first().product,
+                    "quantity": self.quantity,
+                }
+                continue
+            timeline: List = (
+                StockTimeLine.query.filter(StockTimeLine.time < self.time).filter_by(product_id=product_id).all()
+            )
+            if len(timeline) > 0:
+                product: StockTimeLine = timeline[-1]
+                ret[product.product_id] = {
+                    "product_name": Stock.query.filter_by(id=product.product_id).first().product,
+                    "quantity": product.quantity,
+                }
+        return ret
 
     def to_dict(self: "StockTimeLine") -> dict:
         """Return object data in easily serializable format."""
         return {
             "vm_name": VendingMachine.query.filter_by(id=self.vm_id).first().name,
             "product_name": Stock.query.filter_by(id=self.product_id).first().product,
+            "all_products_detail": self.get_all_product_stock(),
             "quantity": self.quantity,
             "time": self.time,
         }
