@@ -41,8 +41,8 @@ jobs:
   test-and-coverage:
     runs-on: ubuntu-20.04
     services:
-      mariadb:
-        image: mariadb
+      postgres:
+        image: postgres:latest
         env:
           POSTGRES_DB: mydb
           POSTGRES_USER: myuser
