@@ -19,7 +19,7 @@ url: os = (
     + "@"
     + os.environ["POSTGRES_DB"]
 )
-# url: os = "mysql+pymysql://myuser:mypassword@localhost:3306/mydb"
+# url: os = "postgresql://myuser:mypassword@localhost:5432/mydb"
 
 app: Flask = Flask(__name__)
 app.app_context().push()
