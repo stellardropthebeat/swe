@@ -48,7 +48,8 @@ class Stock(db.Model):
 
 def add_to_timeline(vm_id: int, product_id: int, quantity: int) -> None:
     """Add stock to timeline."""
-    db.session.add(StockTimeLine(vm_id, product_id, quantity))
+    stock_timeline: StockTimeLine = StockTimeLine(vm_id, product_id, quantity)
+    db.session.add(stock_timeline)
     db.session.commit()
 
 

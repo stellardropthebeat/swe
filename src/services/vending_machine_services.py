@@ -32,7 +32,3 @@ class VendingMachineManager:
         self.db.session.delete(machine)
         self.db.session.commit()
         self.db.session.close()
-
-    def get_random_id(self: "VendingMachineManager") -> int:
-        """Get a random id from the vending machine table."""
-        return self.db.session.query(VendingMachine.id).order_by(db.func.random()).first()[0]
